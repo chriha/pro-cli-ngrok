@@ -27,7 +27,10 @@ if [ "$1" == "expose" ]; then
 
     shift
 
-    project up
+    if ! project status | grep 'web_1.*Up' >/dev/null; then
+        project restart
+    fi
+
     ngrok http $PORT $@
     exit
 fi
